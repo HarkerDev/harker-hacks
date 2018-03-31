@@ -1,0 +1,103 @@
+body {
+  background-color: black;
+
+  margin: 0;
+  padding: 0;
+}
+
+.hacker-font { font-family: Monaco, Menlo, sans-serif; }
+.green-text { color: #00FF00; }
+.underline { text-decoration: underline;}
+a.no-underline { text-decoration: none; }
+.center { margin: auto; }
+.center-text { text-align: center; }
+.bold { font-weight: bold; }
+.full-width { width: 100%; }
+.white-text { color: white; }
+
+nav {
+  width: 100%;
+  height: 4em;
+  color: #00FF00; /* #20C20E; */
+
+}
+
+nav > .logo {
+  font-size: 32px;
+  line-height: 32px;
+  margin: 0;
+  padding: 16px 10px;
+  display: inline-block;
+}
+
+nav > ul.right {
+  float: right;
+  list-style: none;
+  margin: 0;
+  height: 20px;
+  padding: 22px 10px;
+}
+
+nav > ul.right > li {
+  display: inline;
+  padding: 0 10px;
+  line-height: 20px;
+}
+
+nav > ul.right > li > a {
+  text-decoration: none;
+}
+
+@media (max-width: 767px) {
+  nav > .logo {
+    font-size: 24px;
+    line-height: 24px;
+    padding: 20px 5px;
+  }
+
+  nav > ul.right {
+    padding: 22px 5px;
+  }
+
+  nav > ul.right > li {
+    display: inline;
+    padding: 0 5px;
+  }
+
+  nav > ul.right > li > a {
+    line-height: 14px;
+    font-size: 14px;
+    text-decoration: none;
+  }
+}
+
+/* works until 387px */
+@media (max-width: 580px) {
+  nav > .logo {
+    font-size: 24px;
+    line-height: 24px;
+    padding: 5px 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  nav > ul.right {
+    padding: 22px 5px;
+    float: none;
+    width: 100%;
+    padding: 0;
+    text-align: center;
+
+  }
+
+  nav > ul.right > li {
+    display: inline;
+    padding: 0 2px;
+  }
+
+  nav > ul.right > li > a {
+    line-height: 14px;
+    font-size: 14px;
+    text-decoration: none;
+  }
+}

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="main.css" type="text/css" rel="stylesheet" />
+    <link href="glitch.css" type="text/css" rel="stylesheet" />
+    <link rel="favorite icon" href="img/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <style>
+
+      #main-page {
+        width: 100%;
+        height: calc(100% - 64px);
+        min-height: calc(100% - 64px);
+        text-align: center;
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .faq {
+        min-width: 500px;
+        flex-basis: 500px;
+        height: 130px;
+        margin: auto;
+      }
+
+      @media (max-width: 500px) {
+        .faq {
+          min-width: 300px;
+          flex-basis: 300px;
+          height: 100px;
+          margin: auto;
+          font-size: 14px;
+        }
+
+        .faq-question {
+          font-size: 20px;
+        }
+      }
+
+      .faq-question {
+        width: 100%;
+        text-align: center;
+        margin: 10px 0;
+      }
+
+      @keyframes blinkTextCursor{
+        from{border-right-color: rgba(255,255,255,.9);}
+        to{border-right-color: transparent;}
+      }
+
+      .faq-answer {
+        margin: 0;
+      }
+
+      .faq-sign::after {
+        cursor: pointer;
+        content: '▶';
+      }
+
+      .faq-cursor {
+        border-right-style: solid;
+        border-right-width: 2px;
+        display: inline-block;
+        width: 7.6016px;
+        height: 16px;
+        position: relative;
+        top: 1px;
+        animation: blinkTextCursor 500ms steps(44) infinite;
+      }
+
+      .faq-sign.expanded::after {
+        content: '▼';
+      }
+
+      .faq-answer.faq-disabled {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="green-text hacker-font">
+      <p class="left logo">Harker Hacks</p>
+      <ul class="right">
+        <li><a class="green-text hacker-font bold" href="apply.html">apply</a></li>
+        <li><a class="green-text hacker-font bold" href="about.html">about</a></li>
+        <li><a class="green-text hacker-font bold" href="faq.html">faq</a></li>
+        <li><a class="green-text hacker-font bold" href="schedule.html">schedule</a></li>
+        <li><a class="green-text hacker-font bold" href="sponsors.html">sponsors</a></li>
+        <li><a class="green-text hacker-font bold" href="team.html">team</a></li>
+      </ul>
+    </nav>
+    <div id="main-page">
+      <div class="faq full-width">
+        <h1 class="faq-question green-text hacker-font">What is a hackathon? <span class="faq-sign"></span></h1>
+        <p class="faq-answer white-text hacker-font faq-disabled">A Hackathon is a blah blah blah. A Hackathon is a blah blah blah</p>
+      </div>
+      <div class="faq full-width">
+        <h1 class="faq-question green-text hacker-font">What should I bring? <span class="faq-sign"></span></h1>
+        <p class="faq-answer white-text hacker-font faq-disabled">A Hackathon is a blah blah blah</p>
+      </div>
+      <div class="faq full-width">
+        <h1 class="faq-question green-text hacker-font">Who can participate? <span class="faq-sign"></span></h1>
+        <p class="faq-answer white-text hacker-font faq-disabled">A Hackathon is a blah blah blah</p>
+      </div>
+      <div class="faq full-width">
+        <h1 class="faq-question green-text hacker-font">What can I build? <span class="faq-sign"></span></h1>
+        <p class="faq-answer white-text hacker-font faq-disabled">A Hackathon is a blah blah blah</p>
+      </div>
+      <div class="faq full-width">
+        <h1 class="faq-question green-text hacker-font">How are teams formed? <span class="faq-sign"></span></h1>
+        <p class="faq-answer white-text hacker-font faq-disabled">A Hackathon is a blah blah blah</p>
+      </div>
+      <div class="faq full-width">
+        <h1 class="faq-question green-text hacker-font">More questions? <span class="faq-sign"></span></h1>
+        <p class="faq-answer white-text hacker-font faq-disabled">You can contact us at <a class="white-text" href="mailto:info@harkerhacks.com">info@harkerhacks.com</a> for more information.</p>
+      </div>
+    </div>
+    <script>
+      function textMultiply(text, num) {
+        res = ''
+        for (var i = 0; i < num; i++) res += text
+        return res
+      }
+
+      function generateHTMLSpaceForText(text) {
+        res = ''
+        for (var i = 0; i < text.length; i++) {
+          var letter = text.charAt(i)
+          if (letter == '<') {
+            while (letter != '>') res += (letter = text.charAt(i++));
+            i++
+          }
+          if (letter == ' ' && i != 0) res += '&emsp13;'
+          else if (letter == ' ' && i == 0) res += ' '
+          else res += '&nbsp;'
+        }
+        return res
+      }
+
+      function generateEventHandler(faqSign, faqText, faqInterval) {
+        return function() {
+          faqSign.classList.toggle('expanded')
+
+          var text = faqText.innerHTML
+          faqText.innerHTML = ''
+
+          if (faqText.classList.toggle('faq-disabled')) {
+            faqText.innerHTML = faqText.getAttribute('text')
+            faqText.removeAttribute('text')
+            faqSign.classList.remove('expanded')
+            clearInterval(faqInterval)
+            return
+          }
+
+
+
+          faqText.setAttribute('text', text)
+          var SPEED = 20
+
+          var i = 0
+
+          faqInterval = setInterval(function() {
+            if (i >= text.length) {
+              clearInterval(faqInterval)
+              return
+            }
+
+            if (text.charAt(i) == '<') {
+              while (text.charAt(i) != '>') i++
+            }
+
+            faqText.innerHTML = text.substr(0, i+1) + '<div class="faq-cursor"></div>' + generateHTMLSpaceForText(text.substr(i+1))
+            i++
+          }, SPEED)
+        }
+      }
+
+      // https://www.w3schools.com/howto/howto_js_typewriter.asp
+      for (var faq of document.querySelectorAll('#main-page > .faq')) {
+        var faqSign = faq.querySelector('.faq-sign')
+        var faqText = faq.querySelector('.faq-answer')
+        var faqInterval
+
+
+        console.log(faqText)
+
+        faqSign.addEventListener('click', generateEventHandler(faqSign, faqText, faqInterval))
+      }
+    </script>
+  </body>
+</html>
