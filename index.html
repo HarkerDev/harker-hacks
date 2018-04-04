@@ -4,6 +4,7 @@
     <link href="main.css" type="text/css" rel="stylesheet" />
     <link href="glitch.css" type="text/css" rel="stylesheet" />
     <link rel="favorite icon" href="img/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <style>
       #main-page {
         width: 100%;
@@ -12,6 +13,33 @@
         align-items: center;
         height: calc(100vh - 64px);
         font-size: 30px;
+      }
+
+      #promo-image {
+        max-height: calc(100vh - 64px - 173px - 20px);
+        max-width: 80%;
+      }
+
+      /* when "2018 Hackathon" becomes two lines */
+      @media (max-width: 505px) {
+        #main-page {
+          font-size: 24px;
+        }
+
+        #promo-image {
+          max-height: calc(100vh - 64px - 200px - 20px);
+        }
+      }
+
+      /* when the nav is two lines */
+      @media (max-width: 505px) {
+        #main-page {
+          font-size: 24px;
+        }
+
+        #promo-image {
+          max-height: calc(100vh - 100px - 200px - 20px);
+        }
       }
     </style>
   </head>
@@ -30,7 +58,8 @@
 
     <div id="main-page">
       <div class="full-width">
-        <h1 class="glitch green-text hacker-font center" data-text="2018 Hackathon">2018 Hackathon</h1>
+        <img src="img/promo.png" id="promo-image" />
+        <h1 class="glitch green-text hacker-font center" id="" data-text="2018 Hackathon">2018 Hackathon</h1>
         <h2 class="green-text hacker-font center">June 5-6</h2>
         <h5 class="center"><a class="green-text hacker-font" href="apply.html">Apply Now</a></h3>
       </div>
