@@ -43,21 +43,30 @@
         margin: 10px 0;
       }
 
-      @keyframes blinkTextCursor{
+      /*@keyframes blinkTextCursor{
         from{border-right-color: rgba(255,255,255,.9);}
         to{border-right-color: transparent;}
+      }*/
+
+      @keyframes blinkTextCursor{
+        from{color: rgba(255,255,255,.9);}
+        to{color: transparent;}
       }
 
       .faq-answer {
         margin: 0;
       }
 
-      .faq-sign::after {
+      .faq-sign {
         cursor: pointer;
-        content: '▶';
       }
 
-      .faq-cursor {
+      .faq-sign::after {
+        cursor: pointer;
+        content: '>';
+      }
+
+      /*.faq-cursor {
         border-right-style: solid;
         border-right-width: 2px;
         display: inline-block;
@@ -66,10 +75,18 @@
         position: relative;
         top: 1px;
         animation: blinkTextCursor 500ms steps(44) infinite;
+      }*/
+      .faq-cursor {
+        display: inline-block;
+      }
+      .faq-cursor::after {
+        display: inline-block;
+        content: '|';
+        animation: blinkTextCursor 500ms steps(44) infinite;
       }
 
       .faq-sign.expanded::after {
-        content: '▼';
+        content: 'v';
       }
 
       .faq-answer.faq-disabled {
@@ -81,12 +98,12 @@
     <nav class="green-text hacker-font">
       <p class="left logo"><a class="green-text hacker-font no-underline" href="index.html">Harker Hacks</a></p>
       <ul class="right">
-        <li><a class="green-text hacker-font bold" href="apply.html">apply</a></li>
-        <li><a class="green-text hacker-font bold" href="about.html">about</a></li>
-        <li><a class="green-text hacker-font bold" href="faq.html">faq</a></li>
-        <li><a class="green-text hacker-font bold" href="schedule.html">schedule</a></li>
-        <li><a class="green-text hacker-font bold" href="sponsors.html">sponsors</a></li>
-        <li><a class="green-text hacker-font bold" href="team.html">team</a></li>
+        <li><a class="green-text hacker-font" href="https://goo.gl/forms/whLo3Nw9JvC1RAQ92" target="_blank">apply</a></li>
+        <li><a class="green-text hacker-font" href="about.html">about</a></li>
+        <li><a class="green-text hacker-font" href="faq.html">faq</a></li>
+        <li><a class="green-text hacker-font" href="schedule.html">schedule</a></li>
+        <li><a class="green-text hacker-font" href="sponsors.html">sponsors</a></li>
+        <li><a class="green-text hacker-font" href="team.html">team</a></li>
       </ul>
     </nav>
     <div id="main-page">
@@ -155,7 +172,7 @@
 
 
           faqText.setAttribute('text', text)
-          var SPEED = 20
+          var SPEED = 50
 
           var i = 0
 
@@ -169,7 +186,7 @@
               while (text.charAt(i) != '>') i++
             }
 
-            faqText.innerHTML = text.substr(0, i+1) + '<div class="faq-cursor"></div>' + generateHTMLSpaceForText(text.substr(i+1))
+            faqText.innerHTML = text.substr(0, i+1) + '<div class="faq-cursor"></div>' + generateHTMLSpaceForText(text.substr(i))
             i++
           }, SPEED)
         }
@@ -181,10 +198,8 @@
         var faqText = faq.querySelector('.faq-answer')
         var faqInterval
 
-
-        console.log(faqText)
-
         faqSign.addEventListener('click', generateEventHandler(faqSign, faqText, faqInterval))
+        faqSign.click()
       }
     </script>
   </body>
