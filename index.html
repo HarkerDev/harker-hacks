@@ -6,6 +6,24 @@
     <link rel="favorite icon" href="img/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <style>
+      .star {
+        height: 7px;
+        width: 7px;
+        border-radius: 5px;
+        position: fixed;
+        background-color: white;
+        z-index: 0;
+      }
+
+      .line {
+        position: absolute;
+        width: 100%;
+        background-color: gray;
+        height: 1px;
+        z-index: -1;
+        transform-origin: 0 0;
+      }
+
       #main-page {
         width: 100%;
         text-align: center;
@@ -13,6 +31,8 @@
         align-items: center;
         height: calc(100vh - 64px);
         font-size: 30px;
+        z-index: 10;
+        background: radial-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0));
       }
 
       #promo-image {
@@ -65,5 +85,166 @@
       </div>
 
     </div>
+
+    <script>
+      var MIN_VELOCITY = 0.2
+      var MAX_VELOCITY = 1
+
+      function randomBetween(low, high) {
+        return Math.random() * (high - low) + low
+      }
+
+      function randomBelow(high) {
+        return randomBetween(0, high)
+      }
+
+      function lineDistance(x, y, x0, y0){
+        return Math.sqrt((x -= x0) * x + (y -= y0) * y);
+      }
+
+      // https://codepen.io/anon/pen/erNLaO?editors=1111
+      function drawLine(a, b, line) {
+        if (!line) line = document.createElement('DIV')
+
+        var pointA = { left: parseFloat(a.style.left.slice(0, -2)), top: parseFloat(a.style.top.slice(0, -2)) }
+        var pointB = { left: parseFloat(b.style.left.slice(0, -2)), top: parseFloat(b.style.top.slice(0, -2)) }
+        var pointAcenterX = a.offsetWidth / 2;
+        var pointAcenterY = a.offsetHeight / 2;
+        var pointBcenterX = b.offsetWidth / 2;
+        var pointBcenterY = b.offsetHeight / 2;
+        var angle = Math.atan2(pointB.top - pointA.top, pointB.left - pointA.left) * 180 / Math.PI;
+        //console.log(angle)
+        var distance = lineDistance(pointA.left, pointA.top, pointB.left, pointB.top);
+
+        // Set Angle
+        line.style.transform = 'rotate(' + angle + 'deg)'
+
+        // Set Width
+        line.style.width = distance + 'px'
+
+        // Set Position
+        line.style.position = 'absolute'
+
+        line.style.top = (parseFloat(pointA.top) + pointAcenterY) + 'px'
+        line.style.left = (parseFloat(pointA.left) + 2*pointAcenterX) + 'px'
+
+        //console.log(line.style.left)
+
+        line.classList.add('line')
+        return line
+      }
+
+      function waitForFrame() {
+        return new Promise(function (resolve, reject) {
+
+        })
+      }
+
+      var projectiles = []
+
+      class Projectile {
+        constructor(x, y, vx, vy) {
+          this.lines = []
+
+          if (!x) x = randomBelow(window.innerWidth)
+          if (!y) y = randomBetween(64, window.innerHeight)
+          this.x = x
+          this.y = y
+
+          if (!vx && !vy) {
+            var velocity = randomBetween(MIN_VELOCITY, MAX_VELOCITY)
+            var direction = randomBetween(0, 2*Math.PI)
+            this.vx = Math.cos(direction) * velocity
+            this.vy = Math.sin(direction) * velocity
+          }
+          else if (!vx) {
+            this.vy = vy
+            this.vx = 0
+          }
+          else if (!vx) {
+            this.vx = vx
+            this.vy = 0
+          }
+          else {
+            this.vx = vx
+            this.vy = vy
+          }
+
+          this.element = document.createElement('DIV')
+          this.element.classList.add('star')
+          document.body.appendChild(this.element)
+          this.updatePosition()
+
+
+          var other = projectiles[Math.floor(randomBelow(projectiles.length))]
+          if (other) {
+            var line = drawLine(this.element, other.element, null)
+            document.body.appendChild(line)
+            this.lines.push({ line, other })
+          }
+
+          var other = projectiles[Math.floor(randomBelow(projectiles.length))]
+          if (other) {
+            var line = drawLine(this.element, other.element, null)
+            document.body.appendChild(line)
+            this.lines.push({ line, other })
+          }
+
+          this.step()
+        }
+
+        async step() {
+          //const dostuff = () => {
+            if (this.x + this.vx < 0 || this.x + this.vx > window.innerWidth) this.vx *= -1
+            if (this.y + this.vy < 64 || this.y + this.vy > window.innerHeight) this.vy *= -1
+
+            /*if ( randomBelow(10) < 1) {
+              //console.lo
+              var line = this.lines.shift()
+              console.log(line)
+              if (line) document.body.removeChild(line.line)
+            }*/
+
+            if (randomBelow(10) < 0.5) {
+
+              var other = projectiles[Math.floor(randomBelow(projectiles.length))]
+              if (other) {
+                if (this.lines.length > 0) this.lines[0] = { line: drawLine(this.element, other.element, this.lines[0].line), other }
+              }
+            }
+
+            /*if (randomBelow(10) < 1) {
+              var other = projectiles[Math.floor(randomBelow(projectiles.length))]
+              if (other) {
+                var line = drawLine(this.element, other.element, null)
+                document.body.appendChild(line)
+                this.lines.push({ line, other })
+              }
+            }*/
+
+            this.x += this.vx
+            this.y += this.vy
+
+
+            this.updatePosition()
+
+            window.requestAnimationFrame(this.step.bind(this));
+          //}
+          //dostuff()
+        }
+
+        updatePosition() {
+          this.element.style.left = this.x + 'px'
+          this.element.style.top = this.y + 'px'
+
+          for (var line of this.lines) {
+            //line.line.parentNode.removeChild(line.line)
+            line.line = drawLine(this.element, line.other.element, line.line)
+          }
+        }
+      }
+
+      for (var i = 0; i < 10; i++) projectiles.push(new Projectile())
+    </script>
   </body>
 </html>
