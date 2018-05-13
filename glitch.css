@@ -584,7 +584,7 @@
 }
 .glitch::before {
   /* ... anything needed to make it identical */
-  color: #00FF00;
+  color: #85FFC7;
 
   /* variation */
   left: 3px;
@@ -597,7 +597,7 @@
 }
 .glitch::after {
   /* ... anything needed to make it identical */
-  color: #00FF00;
+  color: #85FFC7;
 
   /* variation */
   left: -3px;
