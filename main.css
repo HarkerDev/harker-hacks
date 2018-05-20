@@ -5,6 +5,11 @@ body {
   padding: 0;
 }
 
+@media screen and (min-width: 0px) and (max-width: 1000px) {
+  .mobile-hide{ display: none; }
+}
+
+
 .hacker-font { font-family: Monaco, Menlo, sans-serif; }
 .green-text { color: #87D68D; }
 .underline { text-decoration: underline;}
