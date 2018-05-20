@@ -1,0 +1,52 @@
+#team-page ul.members {
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  list-style-type: none;
+  flex: 1 0 30px;
+  padding: 0 5%;
+  padding-top: 20px;
+}
+
+#team-page ul.members > li {
+  padding: 10px;
+  width: 250px;
+  display: inline-block;
+  -webkit-transition: width 0.5s; /* For Safari 3.1 to 6.0 */
+          transition: width 0.5s;
+}
+
+/*
+#team-page ul.members > li:hover {
+  width: 20%;
+}
+*/
+
+#team-page ul.members > li > div {
+  background-color: #222;
+  border-radius: 10px;
+}
+
+#team-page ul.members > li > div > div {
+  height: 70px;
+  vertical-align: bottom;
+  padding: 10px;
+}
+
+#team-page ul.members > li > div > div > p {
+  height: 100%;
+  text-align: center;
+  margin: 0;
+}
+
+#team-page ul.members > li img {
+  width: 90%;
+  padding: 5%;
+}
+
+strong {
+  font-weight: bold;
+  font-size: 1.2em;
+}
