@@ -12,6 +12,11 @@ body {
 
 .hacker-font { font-family: Monaco, Menlo, sans-serif; }
 .green-text { color: #87D68D; }
+.blue-text {color: #235a99;}
+.dark-green-text{color: #016d18;}
+.red-text{color: #910e28;}
+.brown-text{color: #d1462e;}
+.purple-text{color: #8216a0;}
 .underline { text-decoration: underline;}
 a.no-underline { text-decoration: none; }
 .center { margin: auto; }
