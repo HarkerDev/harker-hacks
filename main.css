@@ -24,6 +24,12 @@ a.no-underline { text-decoration: none; }
 .bold { font-weight: bold; }
 .full-width { width: 100%; }
 .white-text { color: white; }
+.centerTable 
+{ 
+  margin: 0px auto; 
+  margin-top: 10px;
+}
+
 
 nav {
   width: 100%;
